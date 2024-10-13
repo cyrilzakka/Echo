@@ -6,20 +6,84 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F18592442CBB909C006D3707 /* com.cyrilzakka.Echo.helper in CopyFiles */ = {isa = PBXBuildFile; fileRef = F185921B2CBB0AB1006D3707 /* com.cyrilzakka.Echo.helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F18592192CBB0AB1006D3707 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = Echo.app/Contents/Library/LaunchServices;
+			dstSubfolderSpec = 16;
+			files = (
+				F18592442CBB909C006D3707 /* com.cyrilzakka.Echo.helper in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		F18591FA2CBAF1E7006D3707 /* Echo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F185921B2CBB0AB1006D3707 /* com.cyrilzakka.Echo.helper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = com.cyrilzakka.Echo.helper; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F18592252CBB0B45006D3707 /* Exceptions for "com.cyrilzakka.Echo.helper" folder in "Echo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				HelperConstants.swift,
+				HelperProtocol.swift,
+				"OSStatus+Extensions.swift",
+				RemoteApplicationProtocol.swift,
+			);
+			target = F18591F92CBAF1E7006D3707 /* Echo */;
+		};
+		F185923A2CBB88CC006D3707 /* Exceptions for "Echo" folder in "com.cyrilzakka.Echo.helper" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				EchoErrors.swift,
+			);
+			target = F185921A2CBB0AB1006D3707 /* com.cyrilzakka.Echo.helper */;
+		};
+		F18592462CBB978F006D3707 /* Exceptions for "Echo" folder in "Echo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F18591F92CBAF1E7006D3707 /* Echo */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		F18591FC2CBAF1E7006D3707 /* Echo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F18592462CBB978F006D3707 /* Exceptions for "Echo" folder in "Echo" target */,
+				F185923A2CBB88CC006D3707 /* Exceptions for "Echo" folder in "com.cyrilzakka.Echo.helper" target */,
+			);
 			path = Echo;
+			sourceTree = "<group>";
+		};
+		F185921C2CBB0AB1006D3707 /* com.cyrilzakka.Echo.helper */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F18592252CBB0B45006D3707 /* Exceptions for "com.cyrilzakka.Echo.helper" folder in "Echo" target */,
+			);
+			path = com.cyrilzakka.Echo.helper;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F18591F72CBAF1E7006D3707 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F18592182CBB0AB1006D3707 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				F18591FC2CBAF1E7006D3707 /* Echo */,
+				F185921C2CBB0AB1006D3707 /* com.cyrilzakka.Echo.helper */,
 				F18591FB2CBAF1E7006D3707 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				F18591FA2CBAF1E7006D3707 /* Echo.app */,
+				F185921B2CBB0AB1006D3707 /* com.cyrilzakka.Echo.helper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +136,28 @@
 			productReference = F18591FA2CBAF1E7006D3707 /* Echo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F185921A2CBB0AB1006D3707 /* com.cyrilzakka.Echo.helper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F185921F2CBB0AB1006D3707 /* Build configuration list for PBXNativeTarget "com.cyrilzakka.Echo.helper" */;
+			buildPhases = (
+				F18592172CBB0AB1006D3707 /* Sources */,
+				F18592182CBB0AB1006D3707 /* Frameworks */,
+				F18592192CBB0AB1006D3707 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F185921C2CBB0AB1006D3707 /* com.cyrilzakka.Echo.helper */,
+			);
+			name = com.cyrilzakka.Echo.helper;
+			packageProductDependencies = (
+			);
+			productName = com.cyrilzakka.Echo.helper;
+			productReference = F185921B2CBB0AB1006D3707 /* com.cyrilzakka.Echo.helper */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -81,6 +169,9 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					F18591F92CBAF1E7006D3707 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					F185921A2CBB0AB1006D3707 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 				};
@@ -100,6 +191,7 @@
 			projectRoot = "";
 			targets = (
 				F18591F92CBAF1E7006D3707 /* Echo */,
+				F185921A2CBB0AB1006D3707 /* com.cyrilzakka.Echo.helper */,
 			);
 		};
 /* End PBXProject section */
@@ -116,6 +208,13 @@
 
 /* Begin PBXSourcesBuildPhase section */
 		F18591F62CBAF1E7006D3707 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F18592172CBB0AB1006D3707 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -257,6 +356,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Echo/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -284,6 +385,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Echo/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -293,6 +396,50 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyrilzakka.Echo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		F18592202CBB0AB1006D3707 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = AG2QJ56KLX;
+				ENABLE_HARDENED_RUNTIME = YES;
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"\"$(SRCROOT)/com.cyrilzakka.Echo.helper/Info.plist\"",
+					"-sectcreate",
+					__TEXT,
+					__launchd_plist,
+					"\"$(SRCROOT)/com.cyrilzakka.Echo.helper/Launchd.plist\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cyrilzakka.Echo.helper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F18592212CBB0AB1006D3707 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = AG2QJ56KLX;
+				ENABLE_HARDENED_RUNTIME = YES;
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"\"$(SRCROOT)/com.cyrilzakka.Echo.helper/Info.plist\"",
+					"-sectcreate",
+					__TEXT,
+					__launchd_plist,
+					"\"$(SRCROOT)/com.cyrilzakka.Echo.helper/Launchd.plist\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cyrilzakka.Echo.helper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -314,6 +461,15 @@
 			buildConfigurations = (
 				F185920A2CBAF1E8006D3707 /* Debug */,
 				F185920B2CBAF1E8006D3707 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F185921F2CBB0AB1006D3707 /* Build configuration list for PBXNativeTarget "com.cyrilzakka.Echo.helper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F18592202CBB0AB1006D3707 /* Debug */,
+				F18592212CBB0AB1006D3707 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
