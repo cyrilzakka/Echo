@@ -10,24 +10,24 @@ import Foundation
 // MARK: - Helper
 
 final class Helper: NSObject {
-
-    // MARK: Properties
-
     let listener: NSXPCListener
-
-    // MARK: Init
+    
+    private var streamingProcess: Process?
+    private var updateHandler: ((String) -> Void)?
 
     override init() {
         listener = NSXPCListener(machServiceName: HelperConstants.domain)
         super.init()
         listener.delegate = self
     }
+
+    
+
 }
 
 // MARK: - HelperProtocol
 
 extension Helper: HelperProtocol {
-    
     
     func executeCmd() async throws -> String {
         do {
@@ -37,6 +37,22 @@ extension Helper: HelperProtocol {
             throw error
         }
     }
+    
+    func startStreamingPowerMetrics(updateHandler: @escaping (String) -> Void) {
+            NSLog("startStreamingPowerMetrics called")
+            self.updateHandler = updateHandler
+            streamingProcess = ExecutionService.streamPowerMetrics { [weak self] output in
+                NSLog("Received output in Helper")
+                self?.updateHandler?(output)
+            }
+        }
+        
+        func stopStreamingPowerMetrics() {
+            NSLog("stopStreamingPowerMetrics called")
+            streamingProcess?.terminate()
+            streamingProcess = nil
+            updateHandler = nil
+        }
 }
 
 // MARK: - Run

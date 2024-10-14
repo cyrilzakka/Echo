@@ -18,4 +18,20 @@ enum ExecutionService {
     static func executePowerMetrics() async throws -> String {
         return try await HelperRemoteProvider.remote().executeCmd()
     }
+    
+    static func startStreamingPowerMetrics(updateHandler: @escaping (String) -> Void) async throws {
+        let helper = try await HelperRemoteProvider.remote()
+        helper.startStreamingPowerMetrics { output in
+            print("Received: \(output)")
+            DispatchQueue.main.async {
+                updateHandler(output)
+            }
+        }
+    }
+    
+    /// Stop streaming powermetrics data
+    static func stopStreamingPowerMetrics() async throws {
+        let helper = try await HelperRemoteProvider.remote()
+        helper.stopStreamingPowerMetrics()
+    }
 }

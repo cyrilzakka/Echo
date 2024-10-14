@@ -7,7 +7,8 @@
 
 import Foundation
 
-@objc(HelperProtocol)
-public protocol HelperProtocol {
+@objc public protocol HelperProtocol {
     @objc func executeCmd() async throws -> String
+    @objc func startStreamingPowerMetrics(updateHandler: @escaping (String) -> Void)
+    @objc func stopStreamingPowerMetrics()
 }

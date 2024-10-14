@@ -8,33 +8,53 @@
 import SwiftUI
 
 struct ContentView: View {
-    
-    @State private var scriptOutput = ""
+    @StateObject private var viewModel = ContentViewModel()
     
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text(scriptOutput)
+            ScrollView {
+                Text(viewModel.scriptOutput)
+            }
+            Button("Stop Streaming") {
+                if viewModel.isStreaming {
+                    viewModel.stopStreaming()
+                }
+            }
         }
         .padding()
         .onAppear {
-            executeScript()
+            viewModel.startStreaming()
         }
     }
 }
 
-extension ContentView {
-
-    @MainActor
-    private func executeScript() {
+class ContentViewModel: ObservableObject {
+    @Published var scriptOutput = ""
+    @Published var isStreaming = false
+    
+    func startStreaming() {
         Task {
             do {
-                let result = try await ExecutionService.executePowerMetrics()
-                scriptOutput = result
+                try await ExecutionService.startStreamingPowerMetrics { [weak self] output in
+                    DispatchQueue.main.async {
+                        print(output)
+                        self?.scriptOutput = output
+                    }
+                }
+                await MainActor.run { self.isStreaming = true }
             } catch {
-                scriptOutput = error.localizedDescription
+                await MainActor.run { self.scriptOutput = error.localizedDescription }
+            }
+        }
+    }
+    
+    func stopStreaming() {
+        Task {
+            do {
+                try await ExecutionService.stopStreamingPowerMetrics()
+                await MainActor.run { self.isStreaming = false }
+            } catch {
+                await MainActor.run { self.scriptOutput = error.localizedDescription }
             }
         }
     }
