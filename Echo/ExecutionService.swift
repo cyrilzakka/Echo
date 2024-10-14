@@ -13,12 +13,6 @@ import Foundation
 enum ExecutionService {
 
     // MARK: Execute
-
-    /// Execute the script at the provided URL.
-    static func executePowerMetrics() async throws -> String {
-        return try await HelperRemoteProvider.remote().executeCmd()
-    }
-    
     static func startStreamingPowerMetrics(updateHandler: @escaping (String) -> Void) async throws {
         let helper = try await HelperRemoteProvider.remote()
         helper.startStreamingPowerMetrics { output in

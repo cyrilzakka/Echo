@@ -28,16 +28,6 @@ final class Helper: NSObject {
 // MARK: - HelperProtocol
 
 extension Helper: HelperProtocol {
-    
-    func executeCmd() async throws -> String {
-        do {
-            return try await ExecutionService.executePowerMetrics()
-        } catch {
-            NSLog("Error: \(error.localizedDescription)")
-            throw error
-        }
-    }
-    
     func startStreamingPowerMetrics(updateHandler: @escaping (String) -> Void) {
             NSLog("startStreamingPowerMetrics called")
             self.updateHandler = updateHandler
