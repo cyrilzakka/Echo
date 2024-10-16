@@ -17,8 +17,9 @@ struct PowerMetricsSequence: AsyncSequence {
     }
     
     class AsyncIterator: AsyncIteratorProtocol {
-        let helper: HelperProtocol
-        private var continuation: CheckedContinuation<String?, Error>?
+        private let helper: HelperProtocol
+        private var continuations: [CheckedContinuation<String?, Error>] = []
+        private var isStreaming = false
         private var isFinished = false
         
         init(helper: HelperProtocol) {
@@ -26,24 +27,36 @@ struct PowerMetricsSequence: AsyncSequence {
         }
         
         func next() async throws -> String? {
+            print("NEXT")
             if isFinished {
                 return nil
             }
             
-            return try await withCheckedThrowingContinuation { continuation in
-                self.continuation = continuation
-                
-                helper.startStreamingPowerMetrics { output in
-                    continuation.resume(returning: output)
-                    self.continuation = nil
+            if !isStreaming {
+                print("isStreaming")
+                isStreaming = true
+                helper.startStreamingPowerMetrics { [weak self] output in
+                    guard let self = self else { return }
+                    print("my output: \(output)")
+                    if let continuation = self.continuations.first {
+                        self.continuations.removeFirst()
+                        continuation.resume(returning: output)
+                    }
                 }
+            }
+            
+            return try await withCheckedThrowingContinuation { continuation in
+                continuations.append(continuation)
             }
         }
         
         func cancel() {
             isFinished = true
             helper.stopStreamingPowerMetrics()
-            continuation?.resume(returning: nil)
+            for continuation in continuations {
+                continuation.resume(returning: nil)
+            }
+            continuations.removeAll()
         }
     }
 }

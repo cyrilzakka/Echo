@@ -34,6 +34,8 @@ class ContentViewModel: ObservableObject {
     
     private var streamTask: Task<Void, Error>?
     
+    private var iterator: PowerMetricsSequence.AsyncIterator?
+    
     func startStreaming() {
         guard !isStreaming else { return }
         
@@ -41,7 +43,9 @@ class ContentViewModel: ObservableObject {
         streamTask = Task {
             do {
                 let sequence = try await ExecutionService.streamPowerMetrics()
-                for try await output in sequence {
+                var iterator = sequence.makeAsyncIterator()
+                self.iterator = iterator
+                while let output = try await iterator.next() {
                     scriptOutput = output
                 }
             } catch {
@@ -53,6 +57,8 @@ class ContentViewModel: ObservableObject {
     
     func stopStreaming() {
         streamTask?.cancel()
+        iterator?.cancel()
+        iterator = nil
         streamTask = nil
         isStreaming = false
         
