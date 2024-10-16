@@ -11,19 +11,11 @@ import Foundation
 
 /// Execute a script.
 enum ExecutionService {
-
-    // MARK: Execute
-    static func startStreamingPowerMetrics(updateHandler: @escaping (String) -> Void) async throws {
+    static func streamPowerMetrics() async throws -> PowerMetricsSequence {
         let helper = try await HelperRemoteProvider.remote()
-        helper.startStreamingPowerMetrics { output in
-            print("Received: \(output)")
-            DispatchQueue.main.async {
-                updateHandler(output)
-            }
-        }
+        return PowerMetricsSequence(helper: helper)
     }
     
-    /// Stop streaming powermetrics data
     static func stopStreamingPowerMetrics() async throws {
         let helper = try await HelperRemoteProvider.remote()
         helper.stopStreamingPowerMetrics()

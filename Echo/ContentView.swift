@@ -15,47 +15,49 @@ struct ContentView: View {
             ScrollView {
                 Text(viewModel.scriptOutput)
             }
-            Button("Stop Streaming") {
+            Button(viewModel.isStreaming ? "Stop Streaming" : "Start Streaming") {
                 if viewModel.isStreaming {
                     viewModel.stopStreaming()
+                } else {
+                    viewModel.startStreaming()
                 }
             }
         }
         .padding()
-        .onAppear {
-            viewModel.startStreaming()
-        }
     }
 }
 
+@MainActor
 class ContentViewModel: ObservableObject {
     @Published var scriptOutput = ""
     @Published var isStreaming = false
     
+    private var streamTask: Task<Void, Error>?
+    
     func startStreaming() {
-        Task {
+        guard !isStreaming else { return }
+        
+        isStreaming = true
+        streamTask = Task {
             do {
-                try await ExecutionService.startStreamingPowerMetrics { [weak self] output in
-                    DispatchQueue.main.async {
-                        print(output)
-                        self?.scriptOutput = output
-                    }
+                let sequence = try await ExecutionService.streamPowerMetrics()
+                for try await output in sequence {
+                    scriptOutput = output
                 }
-                await MainActor.run { self.isStreaming = true }
             } catch {
-                await MainActor.run { self.scriptOutput = error.localizedDescription }
+                scriptOutput = error.localizedDescription
             }
+            isStreaming = false
         }
     }
     
     func stopStreaming() {
+        streamTask?.cancel()
+        streamTask = nil
+        isStreaming = false
+        
         Task {
-            do {
-                try await ExecutionService.stopStreamingPowerMetrics()
-                await MainActor.run { self.isStreaming = false }
-            } catch {
-                await MainActor.run { self.scriptOutput = error.localizedDescription }
-            }
+            try? await ExecutionService.stopStreamingPowerMetrics()
         }
     }
 }

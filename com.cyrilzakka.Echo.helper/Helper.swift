@@ -34,7 +34,7 @@ extension Helper: HelperProtocol {
             streamingProcess = ExecutionService.streamPowerMetrics { [weak self] output in
                 NSLog("Received output in Helper")
                 self?.updateHandler?(output)
-            }
+            } 
         }
         
         func stopStreamingPowerMetrics() {

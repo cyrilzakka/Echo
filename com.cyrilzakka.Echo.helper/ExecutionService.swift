@@ -30,17 +30,24 @@ enum ExecutionService {
         
         outHandle.readabilityHandler = { fileHandle in
             autoreleasepool {
-                let data = fileHandle.availableData
-                if data.count > 0 {
-                    if let output = String(data: data, encoding: .utf8) {
-                        NSLog("🟢 Received powermetrics output: %@", output)
-                        updateHandler(output)
+                do {
+                    let data = fileHandle.availableData
+                    if data.count > 0 {
+                        if let output = String(data: data, encoding: .utf8) {
+                            NSLog("🟢 Received powermetrics output: %@", output)
+                            updateHandler(output)
+                        } else {
+                            throw NSError(domain: "com.cyrilzakka.Echo.helper", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert powermetrics output to string"])
+                        }
                     } else {
-                        NSLog("🔴 Failed to convert powermetrics output to string")
+                        NSLog("🟠 Received EOF from powermetrics, ending read")
+                        fileHandle.readabilityHandler = nil
+                        process.terminate()
                     }
-                } else {
-                    NSLog("🔴 Received empty data from powermetrics, ending read")
+                } catch {
+                    NSLog("🔴 Error processing powermetrics output: %@", error.localizedDescription)
                     fileHandle.readabilityHandler = nil
+                    process.terminate()
                 }
             }
         }
